@@ -9,9 +9,8 @@ function MyArray(...args) {
 
 const flattenArr = new MyArray(
     1,
-    2,
-    new MyArray(10, 20, new MyArray(100, 200, new MyArray(1000, 2000))),
-    new MyArray(10, 20)
+    new MyArray(10, new MyArray(100)),
+    new MyArray(10)
 );
 console.log(flattenArr);
 
@@ -33,4 +32,4 @@ MyArray.prototype.flat = function (depth = 1) {
     return result;
 };
 
-console.log(flattenArr.flat(Infinity));
+console.log(flattenArr.flat(2));
