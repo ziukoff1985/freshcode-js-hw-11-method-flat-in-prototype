@@ -7,29 +7,40 @@ function MyArray(...args) {
     }
 }
 
-const flattenArr = new MyArray(
-    1,
-    new MyArray(10, new MyArray(100)),
-    new MyArray(10)
-);
-console.log(flattenArr);
-
 MyArray.prototype.flat = function (depth = 1) {
-    const result = new MyArray();
+    const flatResult = new MyArray();
+
+    if (depth <= 0) {
+        for (let i = 0; i < this.length; i++) {
+            flatResult[i] = this[i];
+            flatResult.length++;
+        }
+        return flatResult;
+    }
 
     function flatten(source, currentDepth) {
         for (let i = 0; i < source.length; i++) {
             if (source[i] instanceof MyArray && currentDepth > 0) {
                 flatten(source[i], currentDepth - 1);
             } else {
-                result[result.length] = source[i];
-                result.length++;
+                flatResult[flatResult.length] = source[i];
+                flatResult.length++;
             }
         }
     }
 
     flatten(this, depth);
-    return result;
+    return flatResult;
 };
 
-console.log(flattenArr.flat(2));
+const newMyArray = new MyArray(
+    1,
+    new MyArray(10, new MyArray(100, new MyArray(1000, new MyArray(10000)))),
+    new MyArray()
+);
+
+console.log(newMyArray.flat());
+console.log(newMyArray.flat(2));
+console.log(newMyArray.flat(3));
+console.log(newMyArray.flat(4));
+console.log(newMyArray.flat(Infinity));
