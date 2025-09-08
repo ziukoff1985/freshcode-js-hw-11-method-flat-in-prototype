@@ -10,14 +10,6 @@ function MyArray(...args) {
 MyArray.prototype.flat = function (depth = 1) {
     const flatResult = new MyArray();
 
-    if (depth <= 0) {
-        for (let i = 0; i < this.length; i++) {
-            flatResult[i] = this[i];
-            flatResult.length++;
-        }
-        return flatResult;
-    }
-
     function flatten(source, currentDepth) {
         for (let i = 0; i < source.length; i++) {
             if (source[i] instanceof MyArray && currentDepth > 0) {
@@ -39,8 +31,8 @@ const newMyArray = new MyArray(
     new MyArray()
 );
 
-console.log(newMyArray.flat());
 console.log(newMyArray.flat(2));
 console.log(newMyArray.flat(3));
 console.log(newMyArray.flat(4));
 console.log(newMyArray.flat(Infinity));
+console.log(newMyArray.flat(0));
